@@ -18,7 +18,7 @@ export function App() {
 
 	return (
 		<div style={{ fontFamily: 'sans-serif', padding: 24 }}>
-			<h1>Ennis-Puentes</h1>
+			<h1>Secure File Viewer App</h1>
 			<p>{message}</p>
 		</div>
 	)
