@@ -1,0 +1,25 @@
+# Frontend (Vite + React + TypeScript)
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Caches
+.vite/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs & OS
+*.log
+.DS_Store
+
+

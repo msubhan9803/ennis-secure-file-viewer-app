@@ -1,0 +1,46 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Node/Bun
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# Caches
+.cache/
+.vite/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# Temp
+tmp/
+temp/
+
