@@ -47,11 +47,14 @@ export class LinksService {
 	}
 
 	redeemToken(token: string): boolean {
-		const query = this.db.query<LinkRow, [string]>('SELECT token, redeemed FROM links WHERE token = ?')
+		const query = this.db.query<LinkRow, [string]>('SELECT token, created_at, redeemed FROM links WHERE token = ?')
 		const row = query.get(token)
 		if (!row) return false
 		if (row.redeemed === 1) return false
-		this.db.run('UPDATE links SET redeemed = 1, redeemed_at = ? WHERE token = ?', Date.now(), token)
+		// Token expiration check (15 minutes = 900_000 ms)
+		const now = Date.now()
+		if (now - row.created_at > 15 * 60 * 1000) return false
+		this.db.run('UPDATE links SET redeemed = 1, redeemed_at = ? WHERE token = ?', now, token)
 		return true
 	}
 }
