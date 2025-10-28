@@ -5,7 +5,6 @@ import { randomBytes } from 'crypto'
 interface LinkRow {
 	token: string
 	created_at: number
-	redeemed: number
 	redeemed_at: number | null
 }
 
@@ -19,14 +18,13 @@ export class LinksService {
 			CREATE TABLE IF NOT EXISTS links (
 				token TEXT PRIMARY KEY,
 				created_at INTEGER NOT NULL,
-				redeemed INTEGER NOT NULL DEFAULT 0,
 				redeemed_at INTEGER
 			)
 		`)
 	}
 
     getAllLinks(): LinkRow[] {
-        const query = this.db.query<LinkRow, []>('SELECT token, created_at, redeemed, redeemed_at FROM links')
+        const query = this.db.query<LinkRow, []>('SELECT token, created_at, redeemed_at FROM links')
         return query.all()
     }
 
@@ -39,7 +37,7 @@ export class LinksService {
 		const token = this.generateToken()
 		const createdAt = Date.now()
 		this.db.run(
-			'INSERT INTO links (token, created_at, redeemed, redeemed_at) VALUES (?, ?, 0, NULL)',
+			'INSERT INTO links (token, created_at, redeemed_at) VALUES (?, ?, NULL)',
 			token,
 			createdAt
 		)
@@ -47,14 +45,18 @@ export class LinksService {
 	}
 
 	redeemToken(token: string): boolean {
-		const query = this.db.query<LinkRow, [string]>('SELECT token, created_at, redeemed FROM links WHERE token = ?')
+		const query = this.db.query<LinkRow, [string]>('SELECT token, created_at, redeemed_at FROM links WHERE token = ?')
 		const row = query.get(token)
 		if (!row) return false
-		if (row.redeemed === 1) return false
-		// Token expiration check (15 minutes = 900_000 ms)
 		const now = Date.now()
-		if (now - row.created_at > 15 * 60 * 1000) return false
-		this.db.run('UPDATE links SET redeemed = 1, redeemed_at = ? WHERE token = ?', now, token)
-		return true
+		if (now - row.created_at <= 15 * 60 * 1000) {
+			// Within 15 minutes, allow viewing
+			return true
+		}
+		// Expired, optionally mark as expired
+		if (!row.redeemed_at) {
+			this.db.run('UPDATE links SET redeemed_at = ? WHERE token = ?', now, token)
+		}
+		return false
 	}
 }

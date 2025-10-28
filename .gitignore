@@ -3,8 +3,6 @@
 Thumbs.db
 
 # Env files
-.env
-.env.*
 !.env.example
 !**/.env.example
 
@@ -37,10 +35,10 @@ coverage/
 *.sqlite3
 
 # IDE
-.vscode/
 .idea/
 
 # Temp
 tmp/
 temp/
 
+config.bat

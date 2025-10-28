@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --hot src/main.ts",
-    "start": "bun src/main.ts",
-    "build": "tsc -p tsconfig.build.json"
+    "dev": "node init && bun --hot src/main.ts",
+    "start": "node init && bun src/main.ts",
+    "build": "node init && tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.7",

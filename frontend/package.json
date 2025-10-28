@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "bunx vite",
-    "build": "bunx vite build",
+    "dev": "node init && bunx vite",
+    "build": "node init && bunx vite build",
     "preview": "bunx vite preview"
   },
   "dependencies": {
