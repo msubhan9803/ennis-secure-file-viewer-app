@@ -7,7 +7,7 @@ export function RootLayout() {
     <div className="min-h-screen bg-white text-gray-900">
       <nav className="sticky top-0 z-10 border-b border-gray-200 bg-white/80 backdrop-blur">
         <div className="container-app h-14 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-lg">Ennis-Puentes</Link>
+          <Link to="/" className="font-semibold text-lg">Secure File Viewer App</Link>
           <div className="flex items-center gap-4 text-sm">
             <NavLink
               to="/"
